@@ -1,0 +1,17 @@
+== o que vai fazer ?
+
+- adicionar templates de estruturas 
+    - web 
+    - drf 
+    - Aplicações em Tempo Real (WebSockets)
+    - Sistemas de Gerenciamento de Conteúdo (CMS)
+    - E-commerce e Marketplaces
+    - Plataformas SaaS (Software as a Service)
+    - Backend para Inteligência Artificial e Machine Learning
+    - Tarefas em Segundo Plano (Background Jobs)
+    - APIs em GraphQL ou APIs Super Rápidas (Alternativas ao DRF)
+    - Ferramentas Internas e Dashboards
+
+- adicionar comandos para cada estrutura 
+- usar o manage para executar os comandos 
+- usa o poetry 
