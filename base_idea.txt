@@ -12,6 +12,12 @@
     - APIs em GraphQL ou APIs Super Rápidas (Alternativas ao DRF)
     - Ferramentas Internas e Dashboards
 
-- adicionar comandos para cada estrutura 
-- usar o manage para executar os comandos 
-- usa o poetry 
+== como vai fazer ?
+- achar a pasta do projeto e do django(se necessario)
+- interceptar o comando ligado ao manage.py 
+- reconhecer os comandos apos startapp 
+- encaminhar para as suas funções no lugar do erro do django
+- trocar o diretorio de criação pelo os seus 
+- usar o OS para criar os diretorios e arquivos especificos
+
+

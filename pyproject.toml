@@ -1,0 +1,17 @@
+[project]
+name = "dj-reframe"
+version = "0.1.0"
+description = "cria diretorios para django"
+authors = [
+    {name = "DougVikt"}
+]
+license = {text = "mit"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
