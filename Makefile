@@ -3,7 +3,9 @@
 install:
 	pip install poetry
 	poetry install
-
+add:
+	poetry add $(dep)
+	
 test:
 	poetry run pytest tests/ -v
 

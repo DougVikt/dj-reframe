@@ -9,6 +9,8 @@ from typing import Optional
 import django
 from django.conf import settings
 from django.core.management import call_command
+# Import version
+from dj_reframe import __version__
 
 
 
@@ -35,8 +37,14 @@ def open_file_explorer(path: Path) -> None:
 
 def main() -> None:
     # Set up the command-line argument parser
-    parser = argparse.ArgumentParser(description="Advanced Django App Creator")
-    
+    parser = argparse.ArgumentParser(description="Advanced Django app creator with customizable architecture templates")
+    # Argument to display version
+    parser.add_argument(
+         "-v", "--version",
+        action="version",
+        version=f"dj-reframe {__version__}",
+        help="Show the installed version"
+    )
      # Positional arguments (app name and architecture type).
     # They are set as OPTIONAL (nargs='?') to allow the '--my-templates' flag to work on its own.
     parser.add_argument("app_name", nargs='?', help="Application name (e.g., blog)")

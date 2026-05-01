@@ -4,7 +4,7 @@ Advanced Django App Creator with customizable architecture templates.
 
 ## Description
 
-DjReframe is a Django extension that transforms the standard `startapp` command. Instead of a generic structure, DjReframe lets you create apps with specialized architectures (Web, API/DRF, Service Layer, etc.) in seconds.
+DjReframe is a Django extension that transforms the standard `startapp` command. Instead of a generic default structure, DjReframe lets you create applications with specialized architectures (Web, API/DRF, Service Layer, etc.) in seconds. You can use our predefined structures or create your own. 
 
 ## Features
 
@@ -67,6 +67,39 @@ dj-reframe --my-templates
 ```
 
 This will open the folder where you can add your own architecture templates. Just create a new folder with your template name and add your Django app structure inside it.
+
+#### 📝 Template File Naming Rules
+
+For DjReframe (and Django's `startapp`) to recognize and properly process your custom templates, **all Python files must end with `.py-tpl`** instead of `.py`.
+
+**Why?** When Django creates an app from a template, it automatically strips the `-tpl` suffix. So `views.py-tpl` becomes `views.py` in the generated app.
+
+**Example of a custom template structure:**
+```
+my-custom-arch/
+├── __init__.py-tpl
+├── admin.py-tpl
+├── apps.py-tpl
+├── models.py-tpl
+├── views.py-tpl
+├── urls.py-tpl
+├── migrations/
+│   └── __init__.py-tpl
+├── static/
+│   └── app_name/
+└── templates/
+    └── app_name/
+```
+
+**Important:**
+- ✅ Python files: MUST use `.py-tpl` (e.g., `models.py-tpl`)
+- ✅ Non-Python files: Use normal extensions (e.g., `style.css`, `index.html`)
+- ✅ Directories: No special suffix needed (e.g., `migrations/`, `templates/`)
+
+Once your template is ready, use it with:
+```bash
+dj-reframe <app_name> my-custom-arch
+```
 
 ### Available Architectures
 
