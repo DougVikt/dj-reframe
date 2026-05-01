@@ -1,0 +1,12 @@
+from django.http import JsonResponse
+from .tasks import send_email_task, process_data_task
+
+def trigger_tasks(request):
+    """Example view to trigger Celery tasks"""
+    # Example: trigger a task asynchronously
+    task = send_email_task.delay(
+        "Test Subject",
+        "Test Message",
+        ["test@example.com"]
+    )
+    return JsonResponse({"task_id": task.id, "status": "Task initiated"})

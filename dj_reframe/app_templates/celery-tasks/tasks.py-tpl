@@ -1,0 +1,28 @@
+from celery import shared_task
+from django.core.mail import send_mail
+from django.conf import settings
+
+@shared_task
+def send_email_task(subject, message, recipient_list):
+    """Example task: send email"""
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=recipient_list,
+        fail_silently=False,
+    )
+    return f"Email sent to {len(recipient_list)} recipients"
+
+@shared_task
+def process_data_task(data):
+    """Example task: process data"""
+    # Add your processing logic here
+    result = f"Processed: {data}"
+    return result
+
+@shared_task
+def cleanup_task():
+    """Example task: cleanup old records"""
+    # Add cleanup logic here
+    return "Cleanup completed"
