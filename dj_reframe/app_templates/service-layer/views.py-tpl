@@ -1,0 +1,8 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from .services import *
+
+# Create your views here.
+def index(request):
+    """Example view"""
+    return JsonResponse({"message": "Service Layer App"})

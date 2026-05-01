@@ -1,0 +1,9 @@
+from .models import *
+
+def get_all_objects(model_class):
+    """Generic selector to get all objects"""
+    return model_class.objects.all()
+
+def get_object_by_id(model_class, pk):
+    """Generic selector to get object by ID"""
+    return model_class.objects.get(pk=pk)
