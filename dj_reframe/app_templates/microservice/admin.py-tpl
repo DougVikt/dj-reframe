@@ -1,0 +1,3 @@
+from django.contrib import admin
+
+# Microservice app - may not need admin, but kept for consistency
