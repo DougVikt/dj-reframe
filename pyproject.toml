@@ -1,17 +1,46 @@
 [project]
 name = "dj-reframe"
 version = "0.1.0"
-description = "cria diretorios para django"
+description = "Advanced Django app creator with customizable architecture templates"
 authors = [
     {name = "DougVikt"}
 ]
-license = {text = "mit"}
+license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "django (>=6.0.4,<7.0.0)"
+requires-python = ">=3.10"
+keywords = [
+    "django", "cli", "startapp", "architecture",
+    "drf", "api", "websockets"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Utilities"
 ]
 
+dependencies = [
+    "django >=4.0"
+]
+
+[project.urls]
+Repository = "https://github.com/DougVikt/dj-reframe"
+Homepage = "https://github.com/DougVikt/dj-reframe"
+
+[tool.poetry]
+include = [
+    "dj_reframe/app_templates/**/*"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = ">=4.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -19,3 +48,16 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 dj-reframe = "dj_reframe.cli:main"
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "TCH"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
