@@ -26,6 +26,14 @@ Or with Poetry:
 poetry add dj-reframe
 ```
 
+## Upgrade
+
+Keep your package up to date with the latest updates
+
+```bash
+pip install --upgrade dj-reframe
+```
+
 ## Usage
 
 ### Basic Usage
