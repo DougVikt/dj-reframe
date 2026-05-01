@@ -1,0 +1,11 @@
+from django.urls import re_path
+from . import consumers
+
+# Create your routing here.
+
+websocket_urlpatterns = [
+
+    # re_path(r'ws/some-path/$', consumers.YourConsumer.as_asgi()),
+    # ...
+    # # Create your routing here.
+]
