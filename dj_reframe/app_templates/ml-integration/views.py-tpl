@@ -1,0 +1,44 @@
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .ml_utils import load_model, predict, preprocess_input
+from .models import MLModel
+
+@csrf_exempt
+def predict_view(request):
+    """API endpoint for ML predictions"""
+    if request.method != 'POST':
+        return JsonResponse({"error": "Only POST method allowed"}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        input_data = data.get('input')
+        
+        if not input_data:
+            return JsonResponse({"error": "No input provided"}, status=400)
+        
+        # Get active model
+        active_model = MLModel.objects.filter(is_active=True).first()
+        if not active_model:
+            return JsonResponse({"error": "No active model found"}, status=404)
+        
+        # Load and predict
+        model = load_model(active_model.model_file.path)
+        processed_input = preprocess_input(input_data)
+        result = predict(model, processed_input)
+        
+        return JsonResponse({
+            "prediction": result,
+            "model": active_model.name,
+            "version": active_model.version
+        })
+    
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+def model_list(request):
+    """List available ML models"""
+    models = MLModel.objects.filter(is_active=True)
+    data = [{"name": m.name, "version": m.version} for m in models]
+    return JsonResponse({"models": data})

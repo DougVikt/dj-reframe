@@ -1,0 +1,33 @@
+import joblib
+import numpy as np
+from pathlib import Path
+from django.conf import settings
+
+def load_model(model_path):
+    """Load ML model from file"""
+    full_path = Path(settings.MEDIA_ROOT) / model_path
+    try:
+        model = joblib.load(full_path)
+        return model
+    except Exception as e:
+        raise Exception(f"Failed to load model: {e}")
+
+def predict(model, input_data):
+    """Make prediction with loaded model"""
+    try:
+        # Convert input to numpy array if needed
+        if isinstance(input_data, dict):
+            # Handle dict input
+            data = np.array(list(input_data.values())).reshape(1, -1)
+        else:
+            data = np.array(input_data).reshape(1, -1)
+        
+        prediction = model.predict(data)
+        return prediction.tolist()
+    except Exception as e:
+        raise Exception(f"Prediction failed: {e}")
+
+def preprocess_input(input_data):
+    """Preprocess input data for model"""
+    # Add your preprocessing logic here
+    return input_data

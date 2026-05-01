@@ -1,0 +1,17 @@
+from django.contrib import admin
+from .models import MLModel
+
+@admin.register(MLModel)
+class MLModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'version', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('name', 'version')
+    actions = ['activate_model', 'deactivate_model']
+    
+    def activate_model(self, request, queryset):
+        queryset.update(is_active=True)
+    activate_model.short_description = "Activate selected models"
+    
+    def deactivate_model(self, request, queryset):
+        queryset.update(is_active=False)
+    deactivate_model.short_description = "Deactivate selected models"
