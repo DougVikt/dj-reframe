@@ -1,7 +1,8 @@
 import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, PropertyMock
 import sys
+import os
 
 # Import the module to test
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -13,19 +14,19 @@ class TestOpenFileExplorer:
     """Tests for the open_file_explorer function"""
     
     @patch('dj_reframe.cli.Path.mkdir')
+    @patch('dj_reframe.cli.os.startfile')
     @patch('dj_reframe.cli.platform')
-    def test_open_file_explorer_windows(self, mock_platform, mock_mkdir):
+    def test_open_file_explorer_windows(self, mock_platform, mock_startfile, mock_mkdir):
         """Test file explorer opens correctly on Windows"""
         from dj_reframe.cli import open_file_explorer
         
         mock_platform.system.return_value = "Windows"
-        mock_platform.startfile = MagicMock()
         
         test_path = Path("C:/test/path")
         open_file_explorer(test_path)
         
         mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
-        mock_platform.startfile.assert_called_once_with(test_path)
+        mock_startfile.assert_called_once_with(test_path)
     
     @patch('dj_reframe.cli.Path.mkdir')
     @patch('dj_reframe.cli.subprocess.Popen')
@@ -86,8 +87,13 @@ class TestMainFunction:
             app_type=None
         )
         
-        main()
+        # Make sys.exit actually exit by raising SystemExit
+        mock_exit.side_effect = SystemExit(0)
         
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        
+        assert exc_info.value.code == 0
         mock_open.assert_called_once()
         mock_exit.assert_called_once_with(0)
     
@@ -104,8 +110,12 @@ class TestMainFunction:
             app_type=None
         )
         
-        main()
+        mock_exit.side_effect = SystemExit(1)
         
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        
+        assert exc_info.value.code == 1
         mock_help.assert_called_once()
         mock_exit.assert_called_once_with(1)
     
@@ -121,6 +131,10 @@ class TestMainFunction:
             app_type="site"
         )
         
-        main()
+        mock_exit.side_effect = SystemExit(1)
         
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        
+        assert exc_info.value.code == 1
         mock_exit.assert_called_once_with(1)
