@@ -26,9 +26,10 @@ def open_file_explorer(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True) 
     print(f"📂 Opening the user's template folder: {path}")
     # Check the operating system to run the correct command to open the folder visually
-    if platform.system() == "Windows":
+    current_os = platform.system()
+    if current_os == "Windows":
         os.startfile(path)
-    elif platform.system() == "Darwin": 
+    elif current_os == "Darwin": 
         # For macOS
         subprocess.Popen(["open", path])
     else: 
@@ -56,20 +57,23 @@ def main() -> None:
     # Parse the arguments entered by the user in the terminal
     args = parser.parse_args()
 
-   # Flow 1: If the user passed the --my-templates flag, open the folder and exit the script (sys.exit(0) = success)
+    # Flow 1: If the user passed the --my-templates flag, open the folder and exit the script (sys.exit(0) = success)
     if args.my_templates:
         open_file_explorer(USER_HOME_DIR)
         sys.exit(0)
+        return
 
     # Flow 2: If the open folder flag was not passed, ensure both app name and app type are provided
     if not args.app_name or not args.app_type:
         parser.print_help()
         sys.exit(1)
+        return
 
     # Django Validation: Check if the app name contains a hyphen, which is not allowed in Python modules
     if "-" in args.app_name:
         print("❌ ERROR: Django does not accept hyphens '-' in the app name. Use underscores '_'.")
         sys.exit(1)
+        return
 
     # Minimal Django Configuration (Standalone mode)
     # Required so Django allows running management commands (like 'startapp') without a manage.py file
@@ -93,6 +97,7 @@ def main() -> None:
         print(f"❌ ERROR: Template '{args.app_type}' not found!")
         print(f"   Tip: Create yours by typing 'dj-reframe --my-templates'")
         sys.exit(1)
+        return
 
     # Attempt to create the Django app using the resolved template
     try:
