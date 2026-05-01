@@ -12,8 +12,6 @@ from django.core.management import call_command
 # Import version
 from dj_reframe import __version__
 
-
-
 # Sets the folder in the user's "Home" directory to store custom templates.
 # E.g., C:\Users\Name\.dj-reframe\my_templates on Windows, or ~/.dj-reframe/my_templates on Linux/Mac
 USER_HOME_DIR = Path.home() / '.dj-reframe' / 'my_templates'
@@ -41,12 +39,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Advanced Django app creator with customizable architecture templates")
     # Argument to display version
     parser.add_argument(
-         "-v", "--version",
+        "-v", "--version",
         action="version",
         version=f"dj-reframe {__version__}",
         help="Show the installed version"
     )
-     # Positional arguments (app name and architecture type).
+    # Positional arguments (app name and architecture type).
     # They are set as OPTIONAL (nargs='?') to allow the '--my-templates' flag to work on its own.
     parser.add_argument("app_name", nargs='?', help="Application name (e.g., blog)")
     parser.add_argument("app_type", nargs='?', help="Architecture type (e.g., site, drf)")
@@ -61,19 +59,16 @@ def main() -> None:
     if args.my_templates:
         open_file_explorer(USER_HOME_DIR)
         sys.exit(0)
-        return
 
     # Flow 2: If the open folder flag was not passed, ensure both app name and app type are provided
     if not args.app_name or not args.app_type:
         parser.print_help()
         sys.exit(1)
-        return
 
     # Django Validation: Check if the app name contains a hyphen, which is not allowed in Python modules
     if "-" in args.app_name:
         print("❌ ERROR: Django does not accept hyphens '-' in the app name. Use underscores '_'.")
         sys.exit(1)
-        return
 
     # Minimal Django Configuration (Standalone mode)
     # Required so Django allows running management commands (like 'startapp') without a manage.py file
@@ -97,7 +92,6 @@ def main() -> None:
         print(f"❌ ERROR: Template '{args.app_type}' not found!")
         print(f"   Tip: Create yours by typing 'dj-reframe --my-templates'")
         sys.exit(1)
-        return
 
     # Attempt to create the Django app using the resolved template
     try:

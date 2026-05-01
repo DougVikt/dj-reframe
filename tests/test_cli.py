@@ -13,14 +13,14 @@ from dj_reframe.cli import USER_HOME_DIR
 class TestOpenFileExplorer:
     """Tests for the open_file_explorer function"""
     
-    @patch('dj_reframe.cli.Path.mkdir')
     @patch('dj_reframe.cli.os.startfile')
-    @patch('dj_reframe.cli.platform')
-    def test_open_file_explorer_windows(self, mock_platform, mock_startfile, mock_mkdir):
+    @patch('dj_reframe.cli.platform.system')
+    @patch('dj_reframe.cli.Path.mkdir')
+    def test_open_file_explorer_windows(self, mock_mkdir, mock_system, mock_startfile):
         """Test file explorer opens correctly on Windows"""
         from dj_reframe.cli import open_file_explorer
         
-        mock_platform.system.return_value = "Windows"
+        mock_system.return_value = "Windows"
         
         test_path = Path("C:/test/path")
         open_file_explorer(test_path)
@@ -28,28 +28,28 @@ class TestOpenFileExplorer:
         mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
         mock_startfile.assert_called_once_with(test_path)
     
-    @patch('dj_reframe.cli.Path.mkdir')
     @patch('dj_reframe.cli.subprocess.Popen')
-    @patch('dj_reframe.cli.platform')
-    def test_open_file_explorer_macos(self, mock_platform, mock_popen, mock_mkdir):
+    @patch('dj_reframe.cli.platform.system')
+    @patch('dj_reframe.cli.Path.mkdir')
+    def test_open_file_explorer_macos(self, mock_mkdir, mock_system, mock_popen):
         """Test file explorer opens correctly on macOS"""
         from dj_reframe.cli import open_file_explorer
         
-        mock_platform.system.return_value = "Darwin"
+        mock_system.return_value = "Darwin"
         
         test_path = Path("/test/path")
         open_file_explorer(test_path)
         
         mock_popen.assert_called_once_with(["open", test_path])
     
-    @patch('dj_reframe.cli.Path.mkdir')
     @patch('dj_reframe.cli.subprocess.Popen')
-    @patch('dj_reframe.cli.platform')
-    def test_open_file_explorer_linux(self, mock_platform, mock_popen, mock_mkdir):
+    @patch('dj_reframe.cli.platform.system')
+    @patch('dj_reframe.cli.Path.mkdir')
+    def test_open_file_explorer_linux(self, mock_mkdir, mock_system, mock_popen):
         """Test file explorer opens correctly on Linux"""
         from dj_reframe.cli import open_file_explorer
         
-        mock_platform.system.return_value = "Linux"
+        mock_system.return_value = "Linux"
         
         test_path = Path("/test/path")
         open_file_explorer(test_path)
