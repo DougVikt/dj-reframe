@@ -26,7 +26,9 @@ def open_file_explorer(path: Path) -> None:
     # Check the operating system to run the correct command to open the folder visually
     current_os = platform.system()
     if current_os == "Windows":
-        os.startfile(path)
+        # os.startfile only exists on Windows
+        if hasattr(os, 'startfile'):
+            os.startfile(path)
     elif current_os == "Darwin": 
         # For macOS
         subprocess.Popen(["open", path])
