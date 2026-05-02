@@ -13,6 +13,7 @@ from dj_reframe.cli import USER_HOME_DIR
 class TestOpenFileExplorer:
     """Tests for the open_file_explorer function"""
     
+    @pytest.mark.skipif(sys.platform != "win32", reason="os.startfile only exists on Windows")
     @patch('dj_reframe.cli.open_file_explorer')
     @patch('dj_reframe.cli.platform.system')
     def test_open_file_explorer_windows(self, mock_system, mock_open):
