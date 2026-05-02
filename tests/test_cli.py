@@ -2,7 +2,6 @@ import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 import sys
-import os
 
 # Import the module to test
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -13,24 +12,11 @@ from dj_reframe.cli import USER_HOME_DIR
 class TestOpenFileExplorer:
     """Tests for the open_file_explorer function"""
     
-    @patch('dj_reframe.cli.open_file_explorer')
-    @patch('dj_reframe.cli.platform.system')
-    def test_open_file_explorer_windows(self, mock_system, mock_open):
-        """Test file explorer opens correctly on Windows"""
-        from dj_reframe.cli import open_file_explorer
-        
-        mock_system.return_value = "Windows"
-        
-        test_path = Path("C:/test/path")
-        open_file_explorer(test_path)
-        
-        mock_open.assert_called_once_with(test_path)
-    
     @patch('dj_reframe.cli.subprocess.Popen')
     @patch('dj_reframe.cli.platform.system')
     @patch('dj_reframe.cli.Path.mkdir')
-    def test_open_file_explorer_macos(self, mock_mkdir, mock_system, mock_popen):
-        """Test file explorer opens correctly on macOS"""
+    def test_open_file_explorer_non_windows(self, mock_mkdir, mock_system, mock_popen):
+        """Test file explorer opens correctly on macOS/Linux"""
         from dj_reframe.cli import open_file_explorer
         
         mock_system.return_value = "Darwin"
@@ -79,11 +65,13 @@ class TestMainFunction:
         """Test main function with --my-templates flag"""
         from dj_reframe.cli import main
         
-        mock_args.return_value = MagicMock(
-            my_templates=True,
-            app_name=None,
-            app_type=None
-        )
+        # Create a simple object with the required attributes
+        args = type('args', (), {
+            'my_templates': True,
+            'app_name': None,
+            'app_type': None
+        })()
+        mock_args.return_value = args
         
         # Make sys.exit actually exit by raising SystemExit
         mock_exit.side_effect = SystemExit(0)
@@ -102,11 +90,13 @@ class TestMainFunction:
         """Test main function exits when missing required args"""
         from dj_reframe.cli import main
         
-        mock_args.return_value = MagicMock(
-            my_templates=False,
-            app_name=None,
-            app_type=None
-        )
+        # Create a simple object with the required attributes
+        args = type('args', (), {
+            'my_templates': False,
+            'app_name': None,
+            'app_type': None
+        })()
+        mock_args.return_value = args
         
         mock_exit.side_effect = SystemExit(1)
         
@@ -123,11 +113,13 @@ class TestMainFunction:
         """Test main function rejects app names with hyphens"""
         from dj_reframe.cli import main
         
-        mock_args.return_value = MagicMock(
-            my_templates=False,
-            app_name="my-app",
-            app_type="site"
-        )
+        # Create a simple object with the required attributes
+        args = type('args', (), {
+            'my_templates': False,
+            'app_name': "my-app",
+            'app_type': "site"
+        })()
+        mock_args.return_value = args
         
         mock_exit.side_effect = SystemExit(1)
         
