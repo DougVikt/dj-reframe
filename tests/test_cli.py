@@ -13,10 +13,9 @@ from dj_reframe.cli import USER_HOME_DIR
 class TestOpenFileExplorer:
     """Tests for the open_file_explorer function"""
     
-    @patch('dj_reframe.cli.os.startfile', create=True)
+    @patch('dj_reframe.cli.open_file_explorer')
     @patch('dj_reframe.cli.platform.system')
-    @patch('dj_reframe.cli.Path.mkdir')
-    def test_open_file_explorer_windows(self, mock_mkdir, mock_system, mock_startfile):
+    def test_open_file_explorer_windows(self, mock_system, mock_open):
         """Test file explorer opens correctly on Windows"""
         from dj_reframe.cli import open_file_explorer
         
@@ -25,8 +24,7 @@ class TestOpenFileExplorer:
         test_path = Path("C:/test/path")
         open_file_explorer(test_path)
         
-        mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
-        mock_startfile.assert_called_once_with(test_path)
+        mock_open.assert_called_once_with(test_path)
     
     @patch('dj_reframe.cli.subprocess.Popen')
     @patch('dj_reframe.cli.platform.system')
