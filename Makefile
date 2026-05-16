@@ -1,14 +1,18 @@
 .PHONY: install test lint format type-check pre-commit-install clean build publish
 
+# poetry
 install:
 	pip install poetry
 	poetry install
 add:
-	poetry add $(dep)
+	poetry add $(name)
+dev:
+	poetry add --group dev $(name)
 	
 test:
 	poetry run pytest tests/ -v
 
+# ruff
 lint:
 	pip install ruff
 	ruff check dj_reframe/
@@ -16,11 +20,11 @@ lint:
 format:
 	pip install ruff
 	ruff format dj_reframe/
-
+# mypy
 type-check:
 	pip install mypy
 	mypy dj_reframe/
-
+# pre-commit
 pre-commit-install:
 	pip install pre-commit
 	pre-commit install
