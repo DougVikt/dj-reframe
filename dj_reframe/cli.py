@@ -3,18 +3,20 @@ import os
 import platform
 import subprocess
 import sys
+
 from pathlib import Path
 
-# Imports to run Django commands
 import django
 from django.conf import settings
 from django.core.management import call_command
 
-# Import version
 from dj_reframe import __version__
 
-# Sets the folder in the user's "Home" directory to store custom templates.
-# E.g., C:\Users\Name\.dj-reframe\my_templates on Windows, or ~/.dj-reframe/my_templates on Linux/Mac
+"""
+ Sets the folder in the user's "Home" directory to store custom templates.
+ E.g.,C:/Users/Name/.dj-reframe/my_templates on Windows,
+ or ~/.dj-reframe/my_templates on Linux/Mac
+"""
 USER_HOME_DIR = Path.home() / ".dj-reframe" / "my_templates"
 
 
@@ -42,7 +44,8 @@ def open_file_explorer(path: Path) -> None:
 def main() -> None:
     # Set up the command-line argument parser
     parser = argparse.ArgumentParser(
-        description="Advanced Django app creator with customizable architecture templates"
+        description="""Advanced Django app creator with
+        customizable architecture templates"""
     )
     # Argument to display version
     parser.add_argument(
@@ -52,8 +55,11 @@ def main() -> None:
         version=f"dj-reframe {__version__}",
         help="Show the installed version",
     )
-    # Positional arguments (app name and architecture type).
-    # They are set as OPTIONAL (nargs='?') to allow the '--my-templates' flag to work on its own.
+    '''
+    Positional arguments (app name and architecture type).
+    They are set as OPTIONAL (nargs='?') to allow the '--my-templates'
+    flag to work on its own.
+    '''
     parser.add_argument("app_name", nargs="?", help="Application name (e.g., blog)")
     parser.add_argument(
         "app_type", nargs="?", help="Architecture type (e.g., site, drf)"
@@ -69,25 +75,32 @@ def main() -> None:
     # Parse the arguments entered by the user in the terminal
     args = parser.parse_args()
 
-    # Flow 1: If the user passed the --my-templates flag, open the folder and exit the script (sys.exit(0) = success)
+    # Flow 1: If the user passed the --my-templates flag,
+    # open the folder and exit the script (sys.exit(0) = success)
     if args.my_templates:
         open_file_explorer(USER_HOME_DIR)
         sys.exit(0)
 
-    # Flow 2: If the open folder flag was not passed, ensure both app name and app type are provided
+    # Flow 2: If the open folder flag was not passed,
+    # ensure both app name and app type are provided
     if not args.app_name or not args.app_type:
         parser.print_help()
         sys.exit(1)
 
-    # Django Validation: Check if the app name contains a hyphen, which is not allowed in Python modules
+    # Django Validation: Check if the app name contains a hyphen,
+    # which is not allowed in Python modules
     if "-" in args.app_name:
         print(
-            "❌ ERROR: Django does not accept hyphens '-' in the app name. Use underscores '_'."
+            """❌ERROR:Django does not accept hyphens '-' in the app name.
+            \n Use underscores '_'."""
         )
         sys.exit(1)
 
-    # Minimal Django Configuration (Standalone mode)
-    # Required so Django allows running management commands (like 'startapp') without a manage.py file
+    '''
+    Minimal Django Configuration (Standalone mode)
+    Required so Django allows running management commands (like 'startapp')
+    without a manage.py file
+    '''
     if not settings.configured:
         settings.configure(INSTALLED_APPS=[])
         django.setup()
@@ -114,7 +127,7 @@ def main() -> None:
     try:
         call_command("startapp", args.app_name, template=str(template_path))
         print(
-            f"✨ SUCCESS: App '{args.app_name}' (architecture '{args.app_type}') created!"
+            f"✨SUCCESS:App '{args.app_name}' (architecture '{args.app_type}')created"
         )
     except Exception as e:
         # Catch and display any Django-related errors during app creation
