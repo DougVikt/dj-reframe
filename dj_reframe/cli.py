@@ -1,16 +1,15 @@
 import argparse
+import django
 import os
 import platform
 import subprocess
 import sys
-
-from pathlib import Path
-
-import django
+from dj_reframe import __version__
 from django.conf import settings
 from django.core.management import call_command
+from pathlib import Path
 
-from dj_reframe import __version__
+
 
 """
  Sets the folder in the user's "Home" directory to store custom templates.

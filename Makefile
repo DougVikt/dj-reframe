@@ -17,6 +17,9 @@ lint:
 	pip install ruff
 	ruff check dj_reframe/
 
+check_r:
+	ruff check dj_reframe/
+
 format:
 	pip install ruff
 	ruff format dj_reframe/
