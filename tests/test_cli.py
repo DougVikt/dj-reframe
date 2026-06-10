@@ -17,7 +17,7 @@ class TestOpenFileExplorer:
     @patch("dj_reframe.cli.platform.system")
     @patch("dj_reframe.cli.Path.mkdir")
     def test_open_file_explorer_non_windows(
-        self, mock_system: MagicMock, mock_popen: MagicMock
+        self, mock_mkdir: MagicMock, mock_system: MagicMock, mock_popen: MagicMock
     ) -> None:
         """Test file explorer opens correctly on macOS/Linux"""
         from dj_reframe.cli import open_file_explorer
@@ -33,7 +33,7 @@ class TestOpenFileExplorer:
     @patch("dj_reframe.cli.platform.system")
     @patch("dj_reframe.cli.Path.mkdir")
     def test_open_file_explorer_linux(
-        self, mock_system: MagicMock, mock_popen: MagicMock
+        self, mock_mkdir: MagicMock, mock_system: MagicMock, mock_popen: MagicMock
     ) -> None:
         """Test file explorer opens correctly on Linux"""
         from dj_reframe.cli import open_file_explorer
