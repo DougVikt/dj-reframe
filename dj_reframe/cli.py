@@ -54,11 +54,11 @@ def main() -> None:
         version=f"dj-reframe {__version__}",
         help="Show the installed version",
     )
-    '''
+    """
     Positional arguments (app name and architecture type).
     They are set as OPTIONAL (nargs='?') to allow the '--my-templates'
     flag to work on its own.
-    '''
+    """
     parser.add_argument("app_name", nargs="?", help="Application name (e.g., blog)")
     parser.add_argument(
         "app_type", nargs="?", help="Architecture type (e.g., site, drf)"
@@ -95,11 +95,11 @@ def main() -> None:
         )
         sys.exit(1)
 
-    '''
+    """
     Minimal Django Configuration (Standalone mode)
     Required so Django allows running management commands (like 'startapp')
     without a manage.py file
-    '''
+    """
     if not settings.configured:
         settings.configure(INSTALLED_APPS=[])
         django.setup()

@@ -5,11 +5,11 @@ from . import views
 
 
 urlpatterns = [
-    
+
     # path('', views.index, name='index'),
     #   ...
-    # Add your views here   
-    
+    # Add your views here
+
 ]
 
 # Serve static and media files in development

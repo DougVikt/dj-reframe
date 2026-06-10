@@ -21,7 +21,7 @@ def predict(model, input_data):
             data = np.array(list(input_data.values())).reshape(1, -1)
         else:
             data = np.array(input_data).reshape(1, -1)
-        
+
         prediction = model.predict(data)
         return prediction.tolist()
     except Exception as e:

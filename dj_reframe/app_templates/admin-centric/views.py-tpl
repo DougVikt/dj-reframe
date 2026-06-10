@@ -4,6 +4,6 @@ from django.http import JsonResponse
 # Home view for admin-centric app
 """
 def admin_home(request):
-    
+
     return JsonResponse({"message": "Admin Centric App - Focused on Django Admin"})
 """

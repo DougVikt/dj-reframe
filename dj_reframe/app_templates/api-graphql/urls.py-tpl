@@ -5,10 +5,9 @@ from .schema import schema
 
 
 urlpatterns = [
-    
+
     # path('graphql/', GraphQLView.as_view(graphiql=True), name='graphql'),
     #   ...
-    # Add your views here   
-    
-]
+    # Add your views here
 
+]

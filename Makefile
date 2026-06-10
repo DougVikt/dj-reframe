@@ -8,7 +8,7 @@ add:
 	poetry add $(name)
 dev:
 	poetry add --group dev $(name)
-	
+
 test:
 	poetry run pytest tests/ -v
 
@@ -27,7 +27,11 @@ format:
 type-check:
 	pip install mypy
 	mypy dj_reframe/
+
 # pre-commit
+commit-test:
+	poetry run pre-commit run --all-files
+
 pre-commit-install:
 	pip install pre-commit
 	pre-commit install

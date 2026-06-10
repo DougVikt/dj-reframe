@@ -5,5 +5,5 @@ urlpatterns = [
 
     # path('', views.admin_home, name='admin-home'),
     # ...
-    
+
 ]

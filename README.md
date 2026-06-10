@@ -4,7 +4,7 @@ Advanced Django App Creator with customizable architecture templates.
 
 ## Description
 
-DjReframe is a Django extension that transforms the standard `startapp` command. Instead of a generic default structure, DjReframe lets you create applications with specialized architectures (Web, API/DRF, Service Layer, etc.) in seconds. You can use our predefined structures or create your own. 
+DjReframe is a Django extension that transforms the standard `startapp` command. Instead of a generic default structure, DjReframe lets you create applications with specialized architectures (Web, API/DRF, Service Layer, etc.) in seconds. You can use our predefined structures or create your own.
 
 ## Features
 

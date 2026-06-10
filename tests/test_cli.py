@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -16,7 +16,9 @@ class TestOpenFileExplorer:
     @patch("dj_reframe.cli.subprocess.Popen")
     @patch("dj_reframe.cli.platform.system")
     @patch("dj_reframe.cli.Path.mkdir")
-    def test_open_file_explorer_non_windows(self, mock_mkdir, mock_system, mock_popen) ->None:
+    def test_open_file_explorer_non_windows(
+        self, mock_system: MagicMock, mock_popen: MagicMock
+    ) -> None:
         """Test file explorer opens correctly on macOS/Linux"""
         from dj_reframe.cli import open_file_explorer
 
@@ -30,7 +32,9 @@ class TestOpenFileExplorer:
     @patch("dj_reframe.cli.subprocess.Popen")
     @patch("dj_reframe.cli.platform.system")
     @patch("dj_reframe.cli.Path.mkdir")
-    def test_open_file_explorer_linux(self, mock_mkdir, mock_system, mock_popen) ->None:
+    def test_open_file_explorer_linux(
+        self, mock_system: MagicMock, mock_popen: MagicMock
+    ) -> None:
         """Test file explorer opens correctly on Linux"""
         from dj_reframe.cli import open_file_explorer
 
@@ -45,13 +49,13 @@ class TestOpenFileExplorer:
 class TestUserHomeDir:
     """Tests for USER_HOME_DIR configuration"""
 
-    def test_user_home_dir_exists(self) ->None:
+    def test_user_home_dir_exists(self) -> None:
         """Test that USER_HOME_DIR is properly configured"""
         assert USER_HOME_DIR is not None
         assert USER_HOME_DIR.name == "my_templates"
         assert USER_HOME_DIR.parent.name == ".dj-reframe"
 
-    def test_user_home_dir_is_path_object(self) ->None:
+    def test_user_home_dir_is_path_object(self) -> None:
         """Test that USER_HOME_DIR is a Path object"""
         assert isinstance(USER_HOME_DIR, Path)
 
@@ -62,7 +66,9 @@ class TestMainFunction:
     @patch("dj_reframe.cli.argparse.ArgumentParser.parse_args")
     @patch("dj_reframe.cli.open_file_explorer")
     @patch("dj_reframe.cli.sys.exit")
-    def test_main_with_my_templates_flag(self, mock_exit, mock_open, mock_args) ->None:
+    def test_main_with_my_templates_flag(
+        self, mock_exit: MagicMock, mock_open: MagicMock, mock_args: MagicMock
+    ) -> None:
         """Test main function with --my-templates flag"""
         from dj_reframe.cli import main
 
@@ -85,7 +91,9 @@ class TestMainFunction:
     @patch("dj_reframe.cli.argparse.ArgumentParser.parse_args")
     @patch("dj_reframe.cli.argparse.ArgumentParser.print_help")
     @patch("dj_reframe.cli.sys.exit")
-    def test_main_missing_args(self, mock_exit, mock_help, mock_args) ->None:
+    def test_main_missing_args(
+        self, mock_exit: MagicMock, mock_help: MagicMock, mock_args: MagicMock
+    ) -> None:
         """Test main function exits when missing required args"""
         from dj_reframe.cli import main
 
@@ -106,7 +114,9 @@ class TestMainFunction:
 
     @patch("dj_reframe.cli.argparse.ArgumentParser.parse_args")
     @patch("dj_reframe.cli.sys.exit")
-    def test_main_hyphen_in_app_name(self, mock_exit, mock_args) ->None:
+    def test_main_hyphen_in_app_name(
+        self, mock_exit: MagicMock, mock_args: MagicMock
+    ) -> None:
         """Test main function rejects app names with hyphens"""
         from dj_reframe.cli import main
 

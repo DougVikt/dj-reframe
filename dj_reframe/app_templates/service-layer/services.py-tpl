@@ -2,22 +2,22 @@ from .models import *
 
 class BaseService:
     """Base class for service layer pattern"""
-    
+
     def __init__(self):
         self.model = None
-    
+
     def get_all(self):
         """Retrieve all objects"""
         return self.model.objects.all()
-    
+
     def get_by_id(self, pk):
         """Retrieve object by ID"""
         return self.model.objects.get(pk=pk)
-    
+
     def create(self, **kwargs):
         """Create new object"""
         return self.model.objects.create(**kwargs)
-    
+
     def update(self, pk, **kwargs):
         """Update existing object"""
         obj = self.get_by_id(pk)
@@ -25,7 +25,7 @@ class BaseService:
             setattr(obj, key, value)
         obj.save()
         return obj
-    
+
     def delete(self, pk):
         """Delete object by ID"""
         obj = self.get_by_id(pk)
